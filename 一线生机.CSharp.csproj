@@ -201,6 +201,7 @@
     <Compile Include="Assets\NGUI\Scripts\UI\UITooltip.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
     <Compile Include="Assets\script\Cube.cs" />
+    <Compile Include="Assets\script\Res.cs" />
     <Compile Include="Assets\script\StartGameManager.cs" />
     <Compile Include="Assets\script\Test.cs" />
   </ItemGroup>

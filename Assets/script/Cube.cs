@@ -11,8 +11,11 @@ public class Cube : MonoBehaviour {
     private Renderer renderer;
     private Material material;
 
+    private SpriteRenderer labelRenderer;
+
     void Awake(){
         renderer=GetComponent<Renderer>();
+        labelRenderer=GetComponentsInChildren<SpriteRenderer>()[1];
         material = renderer.sharedMaterial;
         material.color=getColor();
     }
@@ -22,7 +25,7 @@ public class Cube : MonoBehaviour {
             AddCrossTime(1);   
         }
         material.color = getColor();
-        
+        labelRenderer.sprite = Res.instance.numberSpriteList[crossTimes];
     }
 
     public void AddCrossTime(int time)
