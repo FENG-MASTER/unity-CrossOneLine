@@ -69,13 +69,12 @@ public class Test : MonoBehaviour {
     }
 
     private int N = 4;
-    private int[,] cubes;
+
     private List<_Point> rs=new List<_Point>();
 
 	// Use this for initialization
 	void Start () {
 
-        cubes = new int[N, N];
         getRoad(new _Point(0,0),new _Point(3,3),rs,17);
         print("??????????????");
 
