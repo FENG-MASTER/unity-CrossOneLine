@@ -201,6 +201,8 @@
     <Compile Include="Assets\NGUI\Scripts\UI\UITooltip.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
     <Compile Include="Assets\script\GeneralRoadMaker.cs" />
+    <Compile Include="Assets\script\Manager\DefaultDetecter.cs" />
+    <Compile Include="Assets\script\Manager\GameDetecter.cs" />
     <Compile Include="Assets\script\Manager\MainControler.cs" />
     <Compile Include="Assets\script\Manager\ScreenManeger.cs" />
     <Compile Include="Assets\script\Manager\StartGameManager.cs" />
