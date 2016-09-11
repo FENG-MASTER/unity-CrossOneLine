@@ -211,7 +211,8 @@
     <Compile Include="Assets\script\Model\_Point.cs" />
     <Compile Include="Assets\script\Res.cs" />
     <Compile Include="Assets\script\RoadMaker.cs" />
-    <Compile Include="Assets\script\Test.cs" />
+    <Compile Include="Assets\script\Touch\DefalutTouchHandler.cs" />
+    <Compile Include="Assets\script\Touch\TouchHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\NGUI\Examples\Atlases\Fantasy\Fantasy Font - Normal.txt" />
