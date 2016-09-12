@@ -28,10 +28,12 @@ public class Cube : MonoBehaviour {
 
     private SpriteRenderer labelRenderer;
 
+    private GameObject touchReceiver;
+
     void Awake(){
         renderer = GetComponent<SpriteRenderer>();
         labelRenderer=GetComponentsInChildren<SpriteRenderer>()[1];//这个才是子组件中的
-    
+        touchReceiver = GameObject.Find("CubesPlane");
         
 
       
@@ -65,18 +67,22 @@ public class Cube : MonoBehaviour {
     void OnMouseDown()
     {
       
-        OnPress();
+     //   OnPress();
+        touchReceiver.SendMessage("OnStartTouch", this);
 
+    }
+
+    void OnMouseUp()
+    {
+        touchReceiver.SendMessage("OnRelaseTouch", this);
     }
 
 
 
     void OnMouseEnter()
     {
-  
-        if(startPress){
-            OnPress();
-        }
+        touchReceiver.SendMessage("Ontouch", this);
+     
     }
 
     public void AddCrossTime(int time)
@@ -90,55 +96,13 @@ public class Cube : MonoBehaviour {
        
     }
 
-    public void setCanTouch()
-    {
-        canTouch = true;
-    }
-
-    public void setCannotTouch()
-    {
-        canTouch = false;
-    }
 
  
 
 
-    private void OnPress()
-    {
-        //当点击该方块的时候
-        if (startPress == false && crossTimes > 0)
-        {
-            startPress = true;
-        }
+   
 
-
-        if (Cubes.instance.activityListIsEmpty())
-        {
-            if (crossTimes > 0)
-            {
-                if (Cubes.instance.setPressCube(this))
-                {
-                    crossOneTime();
-                }
-            }
-
-        }
-        else
-        {
-            if (canTouch)
-            {
-                if (Cubes.instance.setPressCube(this))
-                {
-                    crossOneTime();
-                }
-            }
-        }
-
-        
-
-    }
-
-    private void crossOneTime()
+    public void crossOneTime()
     {
         crossTimes--;
     }
@@ -146,7 +110,7 @@ public class Cube : MonoBehaviour {
 
     public void restore()
     {
-        setCannotTouch();
+       
         crossTimes = allCrossTimes;
         renderer.sprite = Res.instance.cubeSpriteList[crossTimes];
     }

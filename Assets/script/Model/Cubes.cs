@@ -31,23 +31,22 @@ public class Cubes : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if(Input.GetMouseButtonUp(0)){
-            for (int i = 0; i < N; i++)
-            {
-                for (int j = 0; j < N; j++)
-                {
-                    cubesList[i, j].restore();
-                }
-            }
-            activityCubeList.Clear();
-            Cube.startPress = false;
-        }
-
         if(detector.isMissionCompleted(cubesList)){
             MainControler.instance.startGame();
         }
 	
 	}
+
+    public void restore()
+    {
+        for (int i = 0; i < N; i++)
+        {
+            for (int j = 0; j < N; j++)
+            {
+                cubesList[i, j].restore();
+            }
+        }
+    }
 
 
     public bool activityListIsEmpty()
@@ -67,6 +66,7 @@ public class Cubes : MonoBehaviour {
             for (int j = 0; j < N; j++)
             {
                 cubesList[i, j] = GameObject.Instantiate<GameObject>(Res.instance.cubePrefab).GetComponent<Cube>();
+                cubesList[i, j].gameObject.transform.SetParent(GameObject.Find("CubesPlane").transform);
                 cubesList[i, j].Init(i,j);
             }
         }
@@ -141,131 +141,49 @@ public class Cubes : MonoBehaviour {
     
     }
 
-
-    public bool setPressCube(Cube c)
-    {
-        
-
-        if(activityCubeList.Count==0){
-            //如果活动list中什么都没有,那证明是第一次按下,也就是刚刚按下起点
-            
-            activityCubeList.Add(c);
-            addAroundCubes(c);
-            updateActivityCubes();
-        }
-        else
-        {
-
-            Cube lastPressCube = activityCubeList[0];
-            if(lastPressCube==c){
-                return false;
-            }
-            delTouchAcivityCubes();
-            activityCubeList.Clear();
-
-            activityCubeList.Add(c);
-            
-            addAroundCubes(c);
-            activityCubeList.Remove(lastPressCube);//除去刚刚来的那个方向的方块(不允许回头)
-            updateActivityCubes();
-        }
-      
-
-
-        return true;
-
-
-
-    }
-
-    private void addAroundCubes(Cube c)
-    {
-        int x=c.x;
-        int y=c.y;
-
-        if (x <= 0 )
-        {
-            if (cubesList[y, x + 1].hasCrossTime())
-            {
-                activityCubeList.Add(cubesList[y, x + 1]);            
-            }
-        }
-        else if (x >= N - 1)
-        {
-            if (cubesList[y, x - 1].hasCrossTime())
-            {
-                activityCubeList.Add(cubesList[y, x - 1]);
-
-            }
-
-        }
-        else
-        {
-            if (cubesList[y, x + 1].hasCrossTime())
-            {
-                activityCubeList.Add(cubesList[y, x + 1]);
-            }
-            if (cubesList[y, x - 1].hasCrossTime())
-            {
-                activityCubeList.Add(cubesList[y, x - 1]);
-            } 
-        }
-
-        if (y <= 0 )
-        {
-            if(cubesList[y + 1, x].hasCrossTime()){
-                activityCubeList.Add(cubesList[y + 1, x]);
-            }
-        }
-        else if (y >= N - 1 )
-        {
-            if (cubesList[y - 1, x].hasCrossTime())
-            {
-                activityCubeList.Add(cubesList[y - 1, x]);
-            }
-
-        }
-        else
-        {
-            if (cubesList[y + 1, x].hasCrossTime())
-            {
-                activityCubeList.Add(cubesList[y + 1, x]);
-            }
-
-            if (cubesList[y - 1, x].hasCrossTime())
-            {
-                 activityCubeList.Add(cubesList[y-1, x ]);
-            }
-            
-           
-        }
-
-       
-        
-    }
-
-
-    private void updateActivityCubes()
-    {
-        foreach(Cube c in activityCubeList){
-            c.setCanTouch();
-        }
-    }
-
-    private void delTouchAcivityCubes()
-    {
-        foreach (Cube c in activityCubeList)
-        {
-            c.setCannotTouch();
-        }
-
-    }
-
-
     public List<Cube> getAroundCubes(Cube c)
     {
         //TODO: getAroundCubes 未完成
-        return null;
+        List<Cube> aroundList = new List<Cube>();
+
+        int x = c.x;
+        int y = c.y;
+
+        if (x <= 0)
+        {        
+             aroundList.Add(cubesList[y, x + 1]);
+        }
+        else if (x >= N - 1)
+        {
+
+            aroundList.Add(cubesList[y, x - 1]);
+        }
+        else
+        {
+
+            aroundList.Add(cubesList[y, x + 1]);
+            aroundList.Add(cubesList[y, x - 1]);
+
+        }
+
+        if (y <= 0)
+        {
+            aroundList.Add(cubesList[y + 1, x]);
+
+        }
+        else if (y >= N - 1)
+        {
+            aroundList.Add(cubesList[y - 1, x]);
+
+        }
+        else
+        {
+            aroundList.Add(cubesList[y + 1, x]);
+            aroundList.Add(cubesList[y - 1, x]);
+
+        }
+
+        return aroundList;
     }
 
 }
