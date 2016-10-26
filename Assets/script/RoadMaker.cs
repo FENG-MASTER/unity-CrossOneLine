@@ -6,7 +6,7 @@ using System.Text;
 public interface RoadMaker
 {
 
-    List<_Point> makeRoad(_Point start,_Point end,int n,int level);
+    List<_Point> makeRoad(_Point start,_Point end,int n,int len);
 
 }
 

@@ -11,15 +11,12 @@ public class GeneralRoadMaker:RoadMaker
 
     private List<_Point> rs = new List<_Point>();
 
-
-
-
-
-    public List<_Point> makeRoad(_Point start,_Point end,int n,int level)
+    public List<_Point> makeRoad(_Point start,_Point end,int n,int len)
     {
+       
         N = n;
         rs = new List<_Point>();
-        getRoad(start, end, rs, level);
+        getRoad(start, end, rs, len);
         rs.Add(start);
         return rs;
     }
@@ -43,7 +40,7 @@ public class GeneralRoadMaker:RoadMaker
         else
         {
 
-            _Point.Direction d;
+            Util.Direction d;
             do
             {
                 //生成方向
@@ -54,16 +51,16 @@ public class GeneralRoadMaker:RoadMaker
                 _Point newP = null;
                 switch (d)
                 {
-                    case _Point.Direction.down:
+                    case Util.Direction.down:
                         newP = new _Point(start.x + 1, start.y, d);
                         break;
-                    case _Point.Direction.up:
+                    case Util.Direction.up:
                         newP = new _Point(start.x - 1, start.y, d);
                         break;
-                    case _Point.Direction.right:
+                    case Util.Direction.right:
                         newP = new _Point(start.x, start.y + 1, d);
                         break;
-                    case _Point.Direction.left:
+                    case Util.Direction.left:
                         newP = new _Point(start.x, start.y - 1, d);
                         break;
                     default:
@@ -80,7 +77,7 @@ public class GeneralRoadMaker:RoadMaker
 
 
 
-            } while (d != _Point.Direction.none);
+            } while (d != Util.Direction.none);
 
             return false;
 

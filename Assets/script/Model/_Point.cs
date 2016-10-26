@@ -2,24 +2,25 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
 public class _Point {
-    public enum Direction { none = 0, up = 1, down = 2, left = 3, right = 4 };
+   
 
     public int x;
     public int y;
-    public List<Direction> directionList = new List<Direction>();
+    public List<Util.Direction> directionList = new List<Util.Direction>();
 
-    public _Point(int x, int y, Direction d = Direction.none)
+    public _Point(int x, int y, Util.Direction d = Util.Direction.none)
     {
 
         this.x = x;
         this.y = y;
 
-        directionList.Add(Direction.down);
-        directionList.Add(Direction.up);
-        directionList.Add(Direction.right);
-        directionList.Add(Direction.left);
-        if (d != Direction.none)
+        directionList.Add(Util.Direction.down);
+        directionList.Add(Util.Direction.up);
+        directionList.Add(Util.Direction.right);
+        directionList.Add(Util.Direction.left);
+        if (d != Util.Direction.none)
         {
             directionList.Remove(getOppoDirection(d));
         }
@@ -30,35 +31,35 @@ public class _Point {
         return ((_Point)obj).x == this.x && ((_Point)obj).y == this.y;
     }
 
-    public Direction getNextDirection()
+    public Util.Direction getNextDirection()
     {
         if (directionList.Count == 0)
         {
-            return Direction.none;
+            return Util.Direction.none;
         }
 
         int r = Random.Range(0, directionList.Count);
-        Direction d = directionList[r];
+        Util.Direction d = directionList[r];
         directionList.RemoveAt(r);
         return d;
     }
 
-    public static Direction getOppoDirection(Direction d)
+    public static Util.Direction getOppoDirection(Util.Direction d)
     {
-        Direction oppo = Direction.none;
+        Util.Direction oppo = Util.Direction.none;
         switch (d)
         {
-            case Direction.up:
-                oppo = Direction.down;
+            case Util.Direction.up:
+                oppo = Util.Direction.down;
                 break;
-            case Direction.down:
-                oppo = Direction.up;
+            case Util.Direction.down:
+                oppo = Util.Direction.up;
                 break;
-            case Direction.left:
-                oppo = Direction.right;
+            case Util.Direction.left:
+                oppo = Util.Direction.right;
                 break;
-            case Direction.right:
-                oppo = Direction.left;
+            case Util.Direction.right:
+                oppo = Util.Direction.left;
                 break;
             default:
                 break;

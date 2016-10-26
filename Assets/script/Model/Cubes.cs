@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Cubes : MonoBehaviour {
+public class Cubes : MonoBehaviour,GameStateChangeListener {
 
-    private Cube[,] cubesList;//存储所有方块的二维数组
+    public Cube[,] cubesList;//存储所有方块的二维数组
     private List<Cube> activityCubeList=new List<Cube>();//存储活动的方块数组, 0号是当前按下的方块,剩下的是可以按的方块
 
     private GameObject cubesObjList;
@@ -23,20 +23,11 @@ public class Cubes : MonoBehaviour {
         detector = new DefaultDetecter();
     }
 
-	// Use this for initialization
-	void Start () {
-       
-	}
-	
-	// Update is called once per frame
-	void Update () {
 
-        if(detector.isMissionCompleted(cubesList)){
-            MainControler.instance.startGame();
-        }
-	
-	}
 
+    /// <summary>
+    /// 恢复所有方块的状态(已经有数)
+    /// </summary>
     public void restore()
     {
         for (int i = 0; i < N; i++)
@@ -49,17 +40,13 @@ public class Cubes : MonoBehaviour {
     }
 
 
-    public bool activityListIsEmpty()
-    {
-        return activityCubeList.Count == 0;
-    }
 
 
     public void Init()
     {
 
         InitCube(Res.instance.cubeSpriteList[0].texture.width, Res.instance.cubeSpriteList[0].texture.height);
-
+        
         cubesList=new Cube[N,N];
         for (int i=0; i < N;i++ )
         {
@@ -71,14 +58,22 @@ public class Cubes : MonoBehaviour {
             }
         }
 
+        MainControler.instance.AddGameStateChangeListener(this);
        
     }
-
-    public void AddCrossTime(int i,int j)
+    /// <summary>
+    /// 指定方块的数字减少N,这个函数应该是在玩家点击了某方块后执行的方法,也可以用于显示路径
+    /// </summary>
+    /// <param name="i">方块x坐标</param>
+    /// <param name="j">方块y坐标</param>
+    /// <param name="n">减少多少</param>
+    public void crossTime(int i,int j,int n)
     {
-        cubesList[i, j].AddCrossTime(1);
+        cubesList[i, j].crossOneTime(n);
     }
-
+    /// <summary>
+    /// 清除所有方块,清空,包括显示
+    /// </summary>
     public void ClearAll()
     {
 
@@ -108,8 +103,8 @@ public class Cubes : MonoBehaviour {
         }
     }
 
-    public void NewGame(int N,int len)
-    {
+    public void NewGame(_Point s,_Point e,int N,int level,int requestLeftNum)
+    {//TODO:requestLeftNum这个功能没有实现
         if(this.N!=N){
             ClearAll();
             this.N = N;
@@ -117,7 +112,8 @@ public class Cubes : MonoBehaviour {
         }
 
         ClearData();
-        List<_Point> rs= roadMaker.makeRoad(new _Point(0,0),new _Point(N-1,N-1),N,20);
+
+        List<_Point> rs = RoadManager.instance.makeRoad(new _Point(0, 0), new _Point(N - 1, N - 1), N, level);
 
         foreach (_Point p in rs)
         {
@@ -138,7 +134,7 @@ public class Cubes : MonoBehaviour {
 
         Cube.scale = Cube.width / (width/100f);//设置缩放比例
 
-    
+        
     }
 
     public List<Cube> getAroundCubes(Cube c)
@@ -186,4 +182,29 @@ public class Cubes : MonoBehaviour {
         return aroundList;
     }
 
+    private void setCubesTouchable(bool able)
+    {
+
+        for (int i = 0; i < N; i++)
+        {
+            for (int j = 0; j < N; j++)
+            {
+                cubesList[i,j].gameObject.GetComponent<BoxCollider>().enabled = able;
+            }
+        }
+ 
+    }
+
+
+    public void GameStateChange(Util.GameState state)
+    {
+        if (state != Util.GameState.gaming)
+        {
+            setCubesTouchable(false);
+        }
+        else
+        {
+            setCubesTouchable(true);
+        }
+    }
 }

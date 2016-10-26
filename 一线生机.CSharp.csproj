@@ -200,19 +200,26 @@
     <Compile Include="Assets\NGUI\Scripts\UI\UITexture.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UITooltip.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
+    <Compile Include="Assets\script\GameStateChangeListener.cs" />
     <Compile Include="Assets\script\GeneralRoadMaker.cs" />
     <Compile Include="Assets\script\Manager\DefaultDetecter.cs" />
     <Compile Include="Assets\script\Manager\GameDetecter.cs" />
+    <Compile Include="Assets\script\Manager\GameMode\AdventureGameController.cs" />
+    <Compile Include="Assets\script\Manager\GameMode\BaseGameController.cs" />
+    <Compile Include="Assets\script\Manager\GameMode\InfiniteGameController.cs" />
     <Compile Include="Assets\script\Manager\MainControler.cs" />
     <Compile Include="Assets\script\Manager\ScreenManeger.cs" />
     <Compile Include="Assets\script\Manager\StartGameManager.cs" />
+    <Compile Include="Assets\script\ModeChoose.cs" />
     <Compile Include="Assets\script\Model\Cube.cs" />
     <Compile Include="Assets\script\Model\Cubes.cs" />
     <Compile Include="Assets\script\Model\_Point.cs" />
     <Compile Include="Assets\script\Res.cs" />
     <Compile Include="Assets\script\RoadMaker.cs" />
+    <Compile Include="Assets\script\RoadManager.cs" />
     <Compile Include="Assets\script\Touch\DefalutTouchHandler.cs" />
     <Compile Include="Assets\script\Touch\TouchHandler.cs" />
+    <Compile Include="Assets\script\Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\NGUI\Examples\Atlases\Fantasy\Fantasy Font - Normal.txt" />

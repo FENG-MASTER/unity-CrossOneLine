@@ -1,21 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+/// <summary>
+/// 默认的游戏结束检测器
+/// </summary>
 public class DefaultDetecter : GameDetecter {
 
-    
 
 
-    public bool isMissionCompleted(Cube[,] arr)
+
+    public override bool checkMissionCompleted(Cube[,] arr)
     {
-        if(arr==null){
-            return false;
-        }
         return allCubesClear(arr);
     }
 
 
-    //检测二维数组中的所有的方块是否都已经全部为0
+    /// <summary>
+    /// 检测二维数组中的所有的方块是否都已经全部为0,如果全部是0,那么游戏结束
+    /// </summary>
+    /// <param name="arr">需要检测的方块数组</param>
+    /// <returns>游戏是否结束</returns>
     private bool allCubesClear(Cube[,] arr)
     {
         int n1=arr.GetLength(0);

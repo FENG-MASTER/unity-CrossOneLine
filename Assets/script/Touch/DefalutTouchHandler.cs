@@ -9,13 +9,13 @@ public class DefalutTouchHandler : TouchHandler {
     private Cube startCube;
     private Cube endCube;
 
-    public DefalutTouchHandler()
+    public void Init()
     {
         startCube = null;
         endCube = null;
     }
 
-    public DefalutTouchHandler(Cube s,Cube e)
+    public void Init(Cube s,Cube e)
     {
         startCube = s;
         endCube = e;
@@ -31,6 +31,7 @@ public class DefalutTouchHandler : TouchHandler {
         }
 
         activityCubeList.Add(b);
+     
         b.crossOneTime();
         addAroundCubes(b);
 
@@ -51,6 +52,8 @@ public class DefalutTouchHandler : TouchHandler {
             //如果活动list中什么都没有,那证明是第一次按下,也就是刚刚按下起点
 
             activityCubeList.Add(b);
+      
+
             b.crossOneTime();
             addAroundCubes(b);
           
@@ -72,6 +75,7 @@ public class DefalutTouchHandler : TouchHandler {
             activityCubeList.Clear();
 
             activityCubeList.Add(b);
+          
             b.crossOneTime();
             addAroundCubes(b);
             activityCubeList.Remove(lastPressCube);//除去刚刚来的那个方向的方块(不允许回头)
@@ -85,6 +89,7 @@ public class DefalutTouchHandler : TouchHandler {
     {
         clear();
         Cubes.instance.restore();
+   
     }
 
 
@@ -101,7 +106,6 @@ public class DefalutTouchHandler : TouchHandler {
 
     private void clear()
     {
-
         activityCubeList.Clear();
         startTouch = false;
     }
