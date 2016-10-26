@@ -8,19 +8,16 @@ public class Res : MonoBehaviour {
     public Sprite[] cubeSpriteList;
     public GameObject cubePrefab;
 
+    public UILabel label_level;
+
+    public GameObject gameBackGround;
+
+    public AudioClip source_click;
+
 
 
     void Awake()
     {
         instance = this;
-        
     }
-
-    
-
-
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }

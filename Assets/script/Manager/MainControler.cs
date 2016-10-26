@@ -15,6 +15,7 @@ public class MainControler : MonoBehaviour {
     private GameDetecter detector;//游戏结束检测器
 
     public GameObject pauseBackGround;
+    private GameObject gameBackGround;
 
     //游戏状态监听列表
     private List<GameStateChangeListener> gameStateChangeListeners
@@ -47,16 +48,35 @@ public class MainControler : MonoBehaviour {
         }
 
         gameControl.Init();
-
+        setBackGround();
+        gameControl.StartGame();
+        
 
 	}
+
+
+    private void setBackGround()
+    {
+         gameBackGround = GameObject.Instantiate<GameObject>(Res.instance.gameBackGround);
+        gameBackGround.transform.position =
+            new Vector3(Camera.main.transform.position.x,
+                Camera.main.transform.position.y,
+                gameBackGround.transform.position.z);
+     //   gameBackGround.transform.localScale = new Vector3((float)1.0 / 100, (float)1.0 / 100, 1);
+    }
 	
 
 	void Update () {
         //当退出按下时
 	    if(Input.GetKeyDown(KeyCode.Escape)){
-            if(gamestate==Util.GameState.gaming){
-                gamestate = Util.GameState.pause;
+            if (gamestate == Util.GameState.gaming)
+            {
+                SetGameState(Util.GameState.pause);
+                showPauseLayout();
+            }
+            else {
+                SetGameState(Util.GameState.gaming);
+                hidePauseLayout();            
             }
         }
 
@@ -99,6 +119,7 @@ public class MainControler : MonoBehaviour {
     /// </summary>
     public void showRoad()
     {
+        
         gameControl.ShowAnswer();
 
     }
@@ -146,8 +167,21 @@ public class MainControler : MonoBehaviour {
     {
         return gamestate;
     }
-
-     
+    /// <summary>
+    /// 显示游戏暂停画面
+    /// </summary>
+    private void showPauseLayout()
+    {
+        pauseBackGround.gameObject.SetActive(true);
+        pauseBackGround.gameObject.GetComponent<TweenAlpha>().PlayForward();
+    }
+    /// <summary>
+    /// 隐藏游戏暂停画面
+    /// </summary>
+    private void hidePauseLayout()
+    {
+        pauseBackGround.gameObject.GetComponent<TweenAlpha>().PlayReverse(); 
+    } 
    
 
 }

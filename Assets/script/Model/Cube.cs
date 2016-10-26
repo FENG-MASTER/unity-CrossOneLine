@@ -71,6 +71,7 @@ public class Cube : MonoBehaviour {
     void OnMouseDown()
     {
         touchReceiver.SendMessage("OnStartTouch", this);
+       
     }
 
     void OnMouseUp()
@@ -82,7 +83,9 @@ public class Cube : MonoBehaviour {
 
     void OnMouseEnter()
     {
-        touchReceiver.SendMessage("Ontouch", this);    
+        touchReceiver.SendMessage("Ontouch", this);
+
+
     }
 
     public void AddCrossTime(int time)
@@ -101,6 +104,7 @@ public class Cube : MonoBehaviour {
     {
         crossTimes-=n;
         playTween();
+        AudioSource.PlayClipAtPoint(Res.instance.source_click, gameObject.transform.position);
     }
 
     /// <summary>

@@ -36,7 +36,7 @@ public class DefalutTouchHandler : TouchHandler {
         addAroundCubes(b);
 
         startTouch = true;
-        
+     
         
     }
 
@@ -82,7 +82,7 @@ public class DefalutTouchHandler : TouchHandler {
       
         }
 
-
+ 
     }
 
     public override void OnRelaseTouch(Cube b)

@@ -130,7 +130,7 @@ public class Cubes : MonoBehaviour,GameStateChangeListener {
 
         //居中显示
         Cube.init_x = Camera.main.transform.position.x - Screen.width / 100.0f / 2.0f + Cube.width / 2f + Screen.width / 100.0f * 0.05f;
-        Cube.init_y = Camera.main.transform.position.y + Screen.height / 100.0f / 2.0f - Cube.height / 2f -Screen.height/100.0f*0.1f;
+        Cube.init_y = Camera.main.transform.position.y + Screen.height / 100.0f / 2.0f - Cube.height / 2f -Screen.height/100.0f*0.15f;
 
         Cube.scale = Cube.width / (width/100f);//设置缩放比例
 
