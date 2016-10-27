@@ -12,6 +12,9 @@ public class Cube : MonoBehaviour {
     public static float width;
     public static float scale;
 
+
+
+
     //每个方块的基本信息
     private int allCrossTimes = 0;//一共需要经过的次数
     private int crossTimes = 0;//还需要经过的次数
@@ -19,17 +22,14 @@ public class Cube : MonoBehaviour {
     public int x;//坐标信息
     public int y;
 
-    private bool canTouch = false;
 
-    //全局的标识
-    public static bool startPress=false;
-
-    private SpriteRenderer renderer;
+    private SpriteRenderer renderer;//渲染器
  
-
     private SpriteRenderer labelRenderer;
 
     private GameObject touchReceiver;//父组件中的一个脚本,统一处理按键事件的
+
+    private CubeTouchHandler touchHandler=new DefalutCubeTouchHandler();//点击处理器
 
     private TweenAlpha TA;//自身贴图的动画
     private TweenAlpha TA_num;//数字贴图的动画
@@ -70,22 +70,22 @@ public class Cube : MonoBehaviour {
 
     void OnMouseDown()
     {
-        touchReceiver.SendMessage("OnStartTouch", this);
-       
+     //   touchReceiver.SendMessage("OnStartTouch", this);
+        touchHandler.OnStartTouch(this);
     }
 
     void OnMouseUp()
     {
-        touchReceiver.SendMessage("OnRelaseTouch", this);
+     //   touchReceiver.SendMessage("OnRelaseTouch", this);
+        touchHandler.OnRelaseTouch(this);
     }
 
 
 
     void OnMouseEnter()
     {
-        touchReceiver.SendMessage("Ontouch", this);
-
-
+    //    touchReceiver.SendMessage("Ontouch", this);
+        touchHandler.Ontouch(this);
     }
 
     public void AddCrossTime(int time)
@@ -124,7 +124,9 @@ public class Cube : MonoBehaviour {
     }
 
 
-
+    /// <summary>
+    /// 播放点击动画
+    /// </summary>
     private void playTween()
     {
         //播放点击动画
@@ -143,6 +145,13 @@ public class Cube : MonoBehaviour {
             TA_num.PlayReverse();//倒放
         });
     }
+
+    public void setTouchHandler(CubeTouchHandler handler)
+    {
+        touchHandler = handler;
+    }
+
+   
 
 
 

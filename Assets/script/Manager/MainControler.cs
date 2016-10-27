@@ -30,7 +30,7 @@ public class MainControler : MonoBehaviour {
     }
 
 	void Start () {
-        GameObject.Find("CubesPlane").gameObject.AddComponent<DefalutTouchHandler>();
+     
 
         int mode = PlayerPrefs.GetInt(Util.GAME_TYPE,Util.GAME_TYPE_ADV);
 

@@ -58,7 +58,7 @@ public class Cubes : MonoBehaviour,GameStateChangeListener {
             }
         }
 
-        MainControler.instance.AddGameStateChangeListener(this);
+        MainControler.instance.AddGameStateChangeListener(this);//监听游戏状态变化
        
     }
     /// <summary>
@@ -115,10 +115,18 @@ public class Cubes : MonoBehaviour,GameStateChangeListener {
 
         List<_Point> rs = RoadManager.instance.makeRoad(new _Point(0, 0), new _Point(N - 1, N - 1), N, level);
 
-        foreach (_Point p in rs)
+        int len=rs.Count;
+        for (int i = 0; i < len;i++ )
         {
-            cubesList[p.x,p.y].AddCrossTime(1);
+            if (i == 0 || i == len - 1)
+            {
+                cubesList[rs[i].x, rs[i].y].setTouchHandler(new StartCubeTouchHandler());
+            }
+            cubesList[rs[i].x, rs[i].y].AddCrossTime(1);
+
         }
+
+
     }
 
     private void InitCube(float width,float height)
