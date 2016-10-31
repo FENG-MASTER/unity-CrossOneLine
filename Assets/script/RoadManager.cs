@@ -21,7 +21,7 @@ public class RoadManager : MonoBehaviour {
     /// <returns></returns>
     public List<_Point> makeRoad(_Point s, _Point e, int n, int level)
     {
-        roadlist = roadMaker.makeRoad(s, e, n, Util.getStartLenByN(n) + level);
+        roadlist = roadMaker.makeRoad(s, e, n, Util.getStartLenByN(s,e,n) + level);
     
         return roadlist;
     }
@@ -35,7 +35,7 @@ public class RoadManager : MonoBehaviour {
         }
         else 
         {
-            Cubes.instance.crossTime(roadlist[showRoadNowNum].x, roadlist[showRoadNowNum].y, 1);
+            Cubes.instance.crossTime(roadlist[showRoadNowNum].x, roadlist[showRoadNowNum].y);
             showRoadNowNum++;
             Invoke("showRoad", 0.2f);//延迟执行函数,这里是为了简单的动画效果
         }
@@ -51,6 +51,8 @@ public class RoadManager : MonoBehaviour {
         instance = this;
         roadMaker = new GeneralRoadMaker();
     }
+
+   
 
 
 }

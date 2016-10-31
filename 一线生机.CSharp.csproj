@@ -201,9 +201,11 @@
     <Compile Include="Assets\NGUI\Scripts\UI\UITooltip.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
     <Compile Include="Assets\script\GameStateChangeListener.cs" />
+    <Compile Include="Assets\script\GameTimer.cs" />
     <Compile Include="Assets\script\GeneralRoadMaker.cs" />
-    <Compile Include="Assets\script\Manager\DefaultDetecter.cs" />
-    <Compile Include="Assets\script\Manager\GameDetecter.cs" />
+    <Compile Include="Assets\script\Manager\GameJudger\DefaultDetecter.cs" />
+    <Compile Include="Assets\script\Manager\GameJudger\GameDetecter.cs" />
+    <Compile Include="Assets\script\Manager\GameJudger\RemainStepDetecter.cs" />
     <Compile Include="Assets\script\Manager\GameMode\AdventureGameController.cs" />
     <Compile Include="Assets\script\Manager\GameMode\BaseGameController.cs" />
     <Compile Include="Assets\script\Manager\GameMode\InfiniteGameController.cs" />
@@ -220,6 +222,7 @@
     <Compile Include="Assets\script\Touch\CubeTouchHandler.cs" />
     <Compile Include="Assets\script\Touch\DefalutCubeTouchHandler.cs" />
     <Compile Include="Assets\script\Touch\StartCubeTouchHandler.cs" />
+    <Compile Include="Assets\script\Touch\StepCubeTouchHandler.cs" />
     <Compile Include="Assets\script\Touch\TouchController.cs" />
     <Compile Include="Assets\script\Util.cs" />
   </ItemGroup>

@@ -9,6 +9,10 @@ public class TouchController : MonoBehaviour {
     private List<Cube> touchAbleList=new List<Cube>();
     public static bool startTouch = false;//全局开始画线标记位
 
+    public int step=0;//当前步数
+
+    private List<TouchListener> touchListenerList=new List<TouchListener>();
+    private UILabel stepLabel;
     public static TouchController getInstance()
     {//单例
         return instance;
@@ -18,6 +22,7 @@ public class TouchController : MonoBehaviour {
     {
         ///单例
         instance = this;
+        stepLabel=GameObject.Find("step").GetComponent<UILabel>();
     }
 
 
@@ -51,6 +56,7 @@ public class TouchController : MonoBehaviour {
             addAroundCubes(cb);
             touchAbleList.Remove(lastCube);
         }
+        addStep(1);
         return true;
 
     }
@@ -76,6 +82,8 @@ public class TouchController : MonoBehaviour {
         touchAbleList.Clear();
         startTouch = false;
         Cubes.instance.restore();
+        addStep(-1);
+        touchListenerList.ForEach(delegate(TouchListener l) { l.OnRelase(); });
     }
     /// <summary>
     /// 添加指定方块四周的方块到能点击方块的列表(越界已经处理)
@@ -90,6 +98,38 @@ public class TouchController : MonoBehaviour {
         }
 
     }
+
+    public int getStep()
+    {
+        return step;
+    }
+
+    public void setTouchListener(TouchListener l)
+    {
+        touchListenerList.Add(l);
+    }
+    public void removeTouchListener(TouchListener l)
+    {
+        touchListenerList.Remove(l);
+    }
+
+    public  interface TouchListener
+    {
+        void OnRelase();
+    }
+
+    private void addStep(int add=1)
+    {
+        if (-1 == add)
+        {
+            step = 0;
+        }
+        else {
+            step += add;    
+        }
+
+        stepLabel.text = "当前步数:" + step;
+   }
 
 
 

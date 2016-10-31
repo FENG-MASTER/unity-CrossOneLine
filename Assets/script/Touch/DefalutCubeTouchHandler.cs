@@ -10,7 +10,7 @@ public class DefalutCubeTouchHandler : CubeTouchHandler {
         {
             return;
         }
-        if(b.hasCrossTime()){
+        if(b.getNeedCrossTime()!=0){
             if (TouchController.getInstance().canTouch(b))
             {
                 if (TouchController.getInstance().setTouchCube(b))
@@ -28,7 +28,7 @@ public class DefalutCubeTouchHandler : CubeTouchHandler {
         if(TouchController.startTouch==false){
             return;
         }
-        if (b.hasCrossTime())
+        if (b.getNeedCrossTime() != 0)
         {
             if (TouchController.getInstance().canTouch(b))
             {
@@ -44,5 +44,16 @@ public class DefalutCubeTouchHandler : CubeTouchHandler {
     virtual public void OnRelaseTouch(Cube b)
     {
         TouchController.getInstance().OnRelaseTouch(b);
+    }
+
+
+    public void Update()
+    {
+        
+    }
+
+    virtual public void Init(Cube cb)
+    {
+        
     }
 }

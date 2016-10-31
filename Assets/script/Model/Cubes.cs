@@ -67,9 +67,9 @@ public class Cubes : MonoBehaviour,GameStateChangeListener {
     /// <param name="i">方块x坐标</param>
     /// <param name="j">方块y坐标</param>
     /// <param name="n">减少多少</param>
-    public void crossTime(int i,int j,int n)
+    public void crossTime(int i,int j)
     {
-        cubesList[i, j].crossOneTime(n);
+        cubesList[i, j].crossOneTime();
     }
     /// <summary>
     /// 清除所有方块,清空,包括显示
@@ -113,18 +113,35 @@ public class Cubes : MonoBehaviour,GameStateChangeListener {
 
         ClearData();
 
-        List<_Point> rs = RoadManager.instance.makeRoad(new _Point(0, 0), new _Point(N - 1, N - 1), N, level);
+        List<_Point> rs = RoadManager.instance.makeRoad(s, e, N, level);
 
-        int len=rs.Count;
+
+        int len = rs.Count;
+        int r = Random.Range(2,len-2);
         for (int i = 0; i < len;i++ )
         {
             if (i == 0 || i == len - 1)
             {
                 cubesList[rs[i].x, rs[i].y].setTouchHandler(new StartCubeTouchHandler());
             }
+            else if (i == r)
+            {
+      //          cubesList[rs[i].x, rs[i].y].setTouchHandler(new StepCubeTouchHandler(cubesList[rs[i].x, rs[i].y])); 
+            }
+            cubesList[rs[i].x, rs[i].y].addStep(i + 1);
             cubesList[rs[i].x, rs[i].y].AddCrossTime(1);
 
         }
+
+        if(requestLeftNum!=0){
+
+            _Point[] pp = Util.getRandomStartAndEndPoint(N, requestLeftNum,false);
+            foreach (_Point p in pp)
+            {
+                cubesList[p.x, p.y].AddCrossTime(1);
+            }
+        }
+        
 
 
     }

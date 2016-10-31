@@ -22,12 +22,13 @@ public class Cube : MonoBehaviour {
     public int x;//坐标信息
     public int y;
 
+    private List<int> stepsList = new List<int>();
 
     private SpriteRenderer renderer;//渲染器
  
-    private SpriteRenderer labelRenderer;
-
-    private GameObject touchReceiver;//父组件中的一个脚本,统一处理按键事件的
+    private TextMesh mainTextLabel;
+    private TextMesh requestTextLabel;
+   
 
     private CubeTouchHandler touchHandler=new DefalutCubeTouchHandler();//点击处理器
 
@@ -38,11 +39,11 @@ public class Cube : MonoBehaviour {
 
     void Awake(){
         renderer = GetComponent<SpriteRenderer>();
-        labelRenderer=GetComponentsInChildren<SpriteRenderer>()[1];//这个才是子组件中的
-        touchReceiver = GameObject.Find("CubesPlane");
+        mainTextLabel = GetComponentsInChildren<TextMesh>()[0];
+        requestTextLabel = GetComponentsInChildren<TextMesh>()[1];
         TA = GetComponent<TweenAlpha>();
         TA_num = GetComponentInChildren<TweenAlpha>();
-
+        
        
     }
 
@@ -58,25 +59,29 @@ public class Cube : MonoBehaviour {
         renderer.sprite = Res.instance.cubeSpriteList[0];
         this.x = x;
         this.y = y;
-       
+        stepsList.Clear();
+        gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+        touchHandler = new DefalutCubeTouchHandler();
+        touchHandler.Init(this);
+        showRequestNum(0);
     }
 
     void Update(){
        //绘制相关
-        labelRenderer.sprite = Res.instance.numberSpriteList[crossTimes];
+        mainTextLabel.text = crossTimes + "";
         renderer.sprite = Res.instance.cubeSpriteList[crossTimes];
+
+        touchHandler.Update();//执行下触摸处理器的更新方法
     }
 
 
     void OnMouseDown()
     {
-     //   touchReceiver.SendMessage("OnStartTouch", this);
         touchHandler.OnStartTouch(this);
     }
 
     void OnMouseUp()
     {
-     //   touchReceiver.SendMessage("OnRelaseTouch", this);
         touchHandler.OnRelaseTouch(this);
     }
 
@@ -84,7 +89,6 @@ public class Cube : MonoBehaviour {
 
     void OnMouseEnter()
     {
-    //    touchReceiver.SendMessage("Ontouch", this);
         touchHandler.Ontouch(this);
     }
 
@@ -99,6 +103,8 @@ public class Cube : MonoBehaviour {
        
     }
 
+    static bool show=false;
+    
 
     public void crossOneTime(int n=1)
     {
@@ -115,12 +121,13 @@ public class Cube : MonoBehaviour {
        
         crossTimes = allCrossTimes;
         renderer.sprite = Res.instance.cubeSpriteList[crossTimes];
+
       
     }
 
-    public bool hasCrossTime()
+    public int getNeedCrossTime()
     {
-        return crossTimes > 0;
+        return crossTimes;
     }
 
 
@@ -129,6 +136,8 @@ public class Cube : MonoBehaviour {
     /// </summary>
     private void playTween()
     {
+
+
         //播放点击动画
         TA.enabled = true;
         TA_num.enabled = true;
@@ -149,7 +158,34 @@ public class Cube : MonoBehaviour {
     public void setTouchHandler(CubeTouchHandler handler)
     {
         touchHandler = handler;
+        touchHandler.Init(this);
     }
+
+    public CubeTouchHandler getTouchHandler()
+    {
+        return touchHandler;
+    }
+
+    public void addStep(int s)
+    {
+        stepsList.Add(s);
+    }
+
+    public List<int> getSteps()
+    {
+        return stepsList;
+    }
+
+    public void showRequestNum(int step)
+    {
+        if(step>0){
+            requestTextLabel.text = step + "";
+        }
+        else
+        {
+            requestTextLabel.text = "";
+        }
+   }
 
    
 

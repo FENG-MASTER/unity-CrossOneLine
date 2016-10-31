@@ -8,6 +8,11 @@ public class AdventureGameController : BaseGameController {
 
 
 
+    public void Init()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void StartGame()
     {
         throw new System.NotImplementedException();
@@ -33,7 +38,9 @@ public class AdventureGameController : BaseGameController {
         throw new System.NotImplementedException();
     }
 
-    public void Init()
+
+
+    public void BackToGame()
     {
         throw new System.NotImplementedException();
     }

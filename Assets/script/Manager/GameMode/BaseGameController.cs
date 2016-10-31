@@ -4,7 +4,7 @@ using System.Collections;
 /// <summary>
 /// 游戏控制器接口,用于实现不同游戏模式
 /// </summary>
-public interface BaseGameController{
+public interface BaseGameController {
 
 
     /// <summary>
@@ -21,6 +21,11 @@ public interface BaseGameController{
     /// 游戏暂停
     /// </summary>
   void PauseGame();
+
+   /// <summary>
+   /// 返回游戏
+   /// </summary>
+    void BackToGame();
 
 
     /// <summary>

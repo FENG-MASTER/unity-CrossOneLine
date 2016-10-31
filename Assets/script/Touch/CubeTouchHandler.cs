@@ -3,6 +3,11 @@ using System.Collections;
 
 public interface CubeTouchHandler  {
 
+    /// <summary>
+    /// 初始化
+    /// </summary>
+    /// <param name="cb">绑定方块</param>
+    void Init(Cube cb);
 
     /// <summary>
     /// 玩家开始触碰
@@ -19,5 +24,7 @@ public interface CubeTouchHandler  {
     /// </summary>
     /// <param name="b">最后触碰到的方块</param>
     void OnRelaseTouch(Cube b);
+
+    void Update();
 
 }

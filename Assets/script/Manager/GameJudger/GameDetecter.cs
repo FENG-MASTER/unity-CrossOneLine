@@ -11,9 +11,9 @@ public abstract class GameDetecter {
     /// </summary>
     /// <param name="arr"></param>
     /// <returns></returns>
-    public bool isMissionCompleted(Cube[,] arr)
+    public bool isMissionCompleted(params object[] objects)
     {
-
+        Cube[,] arr = Cubes.instance.cubesList;
         if (MainControler.instance.getGameState() != Util.GameState.gaming)
         {
             //检查下当前游戏状态,如果不是在游戏中,则永远返回否,即游戏没通关
@@ -23,9 +23,9 @@ public abstract class GameDetecter {
         {
             return false;
         }
-        return checkMissionCompleted(arr);
+        return checkMissionCompleted(objects);
     }
 
-    public abstract bool checkMissionCompleted(Cube[,] arr);
+    public abstract bool checkMissionCompleted(params object[] objects);
 	
 }

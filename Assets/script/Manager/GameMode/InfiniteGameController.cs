@@ -15,9 +15,13 @@ public class InfiniteGameController :BaseGameController {
     //游戏结束检测器
     private GameDetecter detector;
 
-    private GameObject pauseBackGround;
+    private UILabel timeLabel;
 
+    private GameTimer.Timer timer;
 
+    private object[] parmsForGameEnd;
+
+    private UILabel remainStepLabel;
 
     public void Init()
     {
@@ -25,6 +29,9 @@ public class InfiniteGameController :BaseGameController {
         level = PlayerPrefs.GetInt(Util.INFINETE_LEVEL, Util.INFINETE_DEFULT_LEVEL);
         n = PlayerPrefs.GetInt(Util.INFINETE_N, Util.INFINETE_DEFULT_N);
         detector = new DefaultDetecter();
+        timer = new GameTimer.Timer();
+        GameTimer.instance.Add(timer);
+        timeLabel = GameObject.Find("time").GetComponent<UILabel>();
     }
 
 
@@ -32,26 +39,37 @@ public class InfiniteGameController :BaseGameController {
     {
         MainControler.instance.SetGameState( Util.GameState.gaming);
         Res.instance.label_level.text = n+1-Util.INFINETE_DEFULT_N+"-"+level/2;
-        startGameByLevel(n, level);
+        timer.stop();
+        timer.start();
+        startGameByLevel(n, level,null,null,2);
         NextLevel();
     }
 
     public void PauseGame()
     {
-        throw new System.NotImplementedException();
+        timer.pause();
+    }
+
+    public void BackToGame()
+    {
+        timer.start();
     }
 
     public void StopGame()
     {
+        timer.stop();
         MainControler.instance.SetGameState(Util.GameState.gameOver);
         SaveGame(n,level);
     }
 
     public void Update()
     {
-
+        timer.Run = delegate(double sec)
+        {
+            timeLabel.text = sec + "";
+        };
         ///检测是否游戏结束
-        if (detector.isMissionCompleted(Cubes.instance.cubesList))
+        if (detector.isMissionCompleted(parmsForGameEnd))
         {
             
             StopGame();
@@ -73,12 +91,20 @@ public class InfiniteGameController :BaseGameController {
         
         if (null == start || null == end)
         {
-            start = new _Point(0, 0);
-            end = new _Point(n - 1, n - 1);
+            _Point[] ps = Util.getRandomStartAndEndPoint(n,2);
+            start = ps[0];
+            end = ps[1];
+        }
+        if(requestLeftNum!=0){
+            detector = new RemainStepDetecter();
+            parmsForGameEnd=new object[1];
+            parmsForGameEnd[0] = requestLeftNum;
         }
 
         Cubes.instance.NewGame(start, end, n, level, requestLeftNum);
     }
+
+
 
     /// <summary>
     /// 下一个关卡处理,包括了level和n的增加
@@ -111,4 +137,9 @@ public class InfiniteGameController :BaseGameController {
         PlayerPrefs.SetInt(Util.INFINETE_N,n);
         PlayerPrefs.SetInt(Util.INFINETE_LEVEL,level);
     }
+
+   
+
+
+  
 }

@@ -17,6 +17,7 @@ public class MainControler : MonoBehaviour {
     public GameObject pauseBackGround;
     private GameObject gameBackGround;
 
+
     //游戏状态监听列表
     private List<GameStateChangeListener> gameStateChangeListeners
         = new List<GameStateChangeListener>();
@@ -49,6 +50,7 @@ public class MainControler : MonoBehaviour {
 
         gameControl.Init();
         setBackGround();
+      
         gameControl.StartGame();
         
 
@@ -57,12 +59,13 @@ public class MainControler : MonoBehaviour {
 
     private void setBackGround()
     {
+     
          gameBackGround = GameObject.Instantiate<GameObject>(Res.instance.gameBackGround);
         gameBackGround.transform.position =
             new Vector3(Camera.main.transform.position.x,
                 Camera.main.transform.position.y,
                 gameBackGround.transform.position.z);
-     //   gameBackGround.transform.localScale = new Vector3((float)1.0 / 100, (float)1.0 / 100, 1);
+
     }
 	
 
@@ -73,10 +76,12 @@ public class MainControler : MonoBehaviour {
             {
                 SetGameState(Util.GameState.pause);
                 showPauseLayout();
+                pauseGame();
             }
             else {
                 SetGameState(Util.GameState.gaming);
-                hidePauseLayout();            
+                hidePauseLayout();
+                backToGame();
             }
         }
 
@@ -93,6 +98,17 @@ public class MainControler : MonoBehaviour {
 
     }
 
+
+    public void pauseGame()
+    {
+        gameControl.PauseGame();
+    }
+
+    public void backToGame()
+    {
+        gameControl.BackToGame();
+    }
+
     /// <summary>
     /// 结束关卡
     /// </summary>
@@ -103,16 +119,6 @@ public class MainControler : MonoBehaviour {
        
     }
 
-    private void startGameByLevel(int n, int level, _Point start=null, _Point end=null, int requestLeftNum = 0)
-    {
-
-        if(null==start||null==end){
-            start = new _Point(0,0);
-            end = new _Point(n-1,n-1);
-        }
-
-        Cubes.instance.NewGame(start, end, n, level, requestLeftNum);
-    }
 
     /// <summary>
     /// 显示路径答案

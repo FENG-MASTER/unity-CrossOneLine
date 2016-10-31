@@ -8,9 +8,9 @@ public class DefaultDetecter : GameDetecter {
 
 
 
-    public override bool checkMissionCompleted(Cube[,] arr)
+    public override bool checkMissionCompleted(params object[] objects)
     {
-        return allCubesClear(arr);
+        return allCubesClear(Cubes.instance.cubesList);
     }
 
 
@@ -27,7 +27,7 @@ public class DefaultDetecter : GameDetecter {
         {
             for (int j = 0; j < n2; j++)
             {
-                if (arr[i, j].hasCrossTime())
+                if (arr[i, j].getNeedCrossTime() != 0)
                 {
                     return false;
                 }

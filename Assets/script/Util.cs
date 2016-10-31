@@ -60,9 +60,10 @@ public class Util : MonoBehaviour
     /// </summary>
     /// <param name="N">地图边长</param>
     /// <returns>等级0的时候对应的路径长度</returns>
-    public static int getStartLenByN(int N)
+    public static int getStartLenByN(_Point s,_Point e,int N)
     {
-        int startLen = 2 * N - 1;
+
+        int startLen  = Mathf.Abs(s.x - e.x) + Mathf.Abs(s.y - e.y) + 1;
         return startLen+(startLen/4)*2-1;
     }
     /// <summary>
@@ -72,6 +73,68 @@ public class Util : MonoBehaviour
     public static void Printf(string s)
     {
         print(s);
+    }
+
+    /// <summary>
+    /// 随机获取指定范围内两个不重复的点
+    /// </summary>
+    /// <param name="n">范围</param>
+    /// <returns>两个点</returns>
+    public static _Point[] getRandomStartAndEndPoint(int n, int requestNum, bool fixedStart=true)
+    {
+        if(requestNum==0){
+            return new _Point[0];
+        }
+        int[] ints = getRandomInts(n);
+
+        _Point[] ps = new _Point[requestNum];
+        for (int i = 0; i < requestNum; i++)
+        {
+            ps[i] = new _Point(0,0);
+        }
+
+        for (int i = 0; i < requestNum; i++)
+        {
+            ps[i].x = ints[i];
+        }
+
+        ints = getRandomInts(n);
+
+        for (int i = 0; i < requestNum; i++)
+        {
+            ps[i].y = ints[i];
+        }
+
+        if(fixedStart){
+            ps[0].x = 0;
+            ps[0].y = 0;
+        }
+        
+        return ps;
+
+    }
+
+    private static int[] getRandomInts(int n)
+    {
+        int[] ints = new int[n];
+
+        for (int i = 0; i < n; i++)
+        {
+            ints[i] = i;
+        }
+
+        int temp;
+        int tempN;
+        for (int i = 0; i < n; i++)
+        {
+            tempN = Random.Range(0, n);
+            temp = ints[i];
+            ints[i] = ints[tempN];
+            ints[tempN] = temp;
+        }
+
+        return ints;
+
     }
 
 }
